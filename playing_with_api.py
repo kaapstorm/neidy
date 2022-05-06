@@ -37,12 +37,19 @@ def send_request():
     domain = 'nhooper'
     version = 'v0.5'
     user_id = '3c6d579a8abdddd07c033d1725b10735'
-    url = f'https://www.commcarehq.org/a/{domain}/api/{version}/user/{user_id}'
+
+    # RuntimeError: You called this URL via PUT, but the URL doesn't end
+    # in a slash and you have APPEND_SLASH set. Django can't redirect to
+    # the slash URL while maintaining PUT data. Change your form to
+    # point to .../a/demo/api/v0.5/user/22e9883da9b04c3e90baa7d303da749b/
+    # (note the trailing slash), or set APPEND_SLASH=False in your
+    # Django settings.
+    url = f'https://www.commcarehq.org/a/{domain}/api/{version}/user/{user_id}/'
 
     resp = requests.put(
         url,
         headers=get_headers(),
-        data=json.dumps(testy_mctestface),
+        json=testy_mctestface,
     )
     if 200 <= resp.status_code < 300:
         print('OK')
