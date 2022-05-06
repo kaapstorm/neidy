@@ -23,21 +23,23 @@ testy_mctestface = {
 }
 
 
+def get_headers():
+    username = os.environ['CCHQ_USERNAME']
+    api_key = os.environ['CCHQ_API_KEY']
+    return {
+        'Authorization': f'ApiKey {username}:{api_key}'
+    }
+
+
 def send_request():
     domain = 'nhooper'
     version = 'v0.5'
     user_id = '3c6d579a8abdddd07c033d1725b10735'
-
-    username = os.environ['CCHQ_USERNAME']
-    api_key = os.environ['CCHQ_API_KEY']
-    headers = {
-        'Authorization': f'ApiKey {username}:{api_key}'
-    }
     url = f'https://www.commcarehq.org/a/{domain}/api/{version}/user/{user_id}'
 
     resp = requests.put(
         url,
-        headers=headers,
+        headers=get_headers(),
         data=json.dumps(testy_mctestface),
     )
     if 200 <= resp.status_code < 300:
