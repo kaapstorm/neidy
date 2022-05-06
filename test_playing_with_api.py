@@ -5,16 +5,18 @@ from playing_with_api import get_headers
 
 
 def test_get_headers():
-    with get_environ():
-        headers = get_headers()
+    with set_up_environ():
         expected = {
-            'Authorization': 'ApiKey test@example.com:abc123'
+            'Authorization': 'ApiKey test@example.com:abc123',
+            'Content-type': 'application/json',
+            'Accept': 'application/json',
         }
+        headers = get_headers()
         assert headers == expected
 
 
 @contextmanager
-def get_environ():
+def set_up_environ():
     username = os.environ['CCHQ_USERNAME']
     api_key = os.environ['CCHQ_API_KEY']
 

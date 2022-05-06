@@ -27,7 +27,9 @@ def get_headers():
     username = os.environ['CCHQ_USERNAME']
     api_key = os.environ['CCHQ_API_KEY']
     return {
-        'Authorization': f'ApiKey {username}:{api_key}'
+        'Authorization': f'ApiKey {username}:{api_key}',
+        'Content-type': 'application/json',
+        'Accept': 'application/json',
     }
 
 
